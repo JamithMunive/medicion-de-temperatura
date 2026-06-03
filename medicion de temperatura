@@ -1,0 +1,74 @@
+from abc import ABC, abstractmethod
+
+class SensorTemperatura(ABC):
+
+    @abstractmethod
+    def obtener_temperatura(self):
+        pass
+
+
+class SensorCelsius(SensorTemperatura):
+
+    def __init__(self, temperatura):
+        self.temperatura = temperatura
+
+    def obtener_temperatura(self):
+        return f"{self.temperatura} °C"
+
+    def convertir_fahrenheit(self):
+        fahrenheit = (self.temperatura * 9/5) + 32
+        return f"{fahrenheit:.2f} °F"
+
+
+class SensorFahrenheit(SensorTemperatura):
+
+    def __init__(self, temperatura):
+        self.temperatura = temperatura
+
+    def obtener_temperatura(self):
+        return f"{self.temperatura} °F"
+
+    def convertir_celsius(self):
+        celsius = (self.temperatura - 32) * 5/9
+        return f"{celsius:.2f} °C"
+
+
+# -----------------------------
+# MENÚ INTERACTIVO
+# -----------------------------
+
+while True:
+
+    print("\n=== SISTEMA DE TEMPERATURA ===")
+    print("1. Sensor Celsius")
+    print("2. Sensor Fahrenheit")
+    print("3. Salir")
+
+    opcion = input("Seleccione una opción: ")
+
+    # Celsius
+    if opcion == "1":
+
+        temp = float(input("Ingrese temperatura en Celsius: "))
+
+        sensor = SensorCelsius(temp)
+
+        print("\nTemperatura actual:", sensor.obtener_temperatura())
+        print("Convertida a Fahrenheit:", sensor.convertir_fahrenheit())
+
+    elif opcion == "2":
+
+        temp = float(input("Ingrese temperatura en Fahrenheit: "))
+
+        sensor = SensorFahrenheit(temp)
+
+        print("\nTemperatura actual:", sensor.obtener_temperatura())
+        print("Convertida a Celsius:", sensor.convertir_celsius())
+
+    elif opcion == "3":
+
+        print("Programa finalizado.")
+        break
+
+    else:
+        print("Opción inválida.")
